@@ -36,7 +36,6 @@ const itemVariants = {
     y: 0,
     opacity: 1,
     transition: {
-      type: "spring",
       stiffness: 100,
       damping: 20,
     },
@@ -109,7 +108,6 @@ const containerVariants = {
     scale: 1,
     transition: {
       duration: 0.8,
-      type: "spring",
       stiffness: 50,
       delayChildren: 0.3,
       staggerChildren: 0.15,
