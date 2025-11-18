@@ -159,7 +159,7 @@ export const EventCountdown: React.FC<EventCountdownProps> = ({
         viewport={{ once: false, amount: 0.5 }}
         variants={containerVariants}
         className="
-          flex justify-center items-center p-4 md:p-6 
+          flex flex-wrap justify-start items-center gap-3 p-4 md:p-6 
           bg-black/20 rounded-2xl shadow-inner
         "
       >

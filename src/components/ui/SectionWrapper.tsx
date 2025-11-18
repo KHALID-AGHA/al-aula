@@ -3,7 +3,7 @@ import Image from "next/image";
 
 const SectionWrapper = ({ name, img, children }: ISectionProps) => {
   return (
-    <div className="relative w-full px-16 pt-10 h-screen">
+    <div className="relative w-full px-16 pt-10 lg:h-screen h-fit pb-5">
       <Image
         src={img}
         alt={name}

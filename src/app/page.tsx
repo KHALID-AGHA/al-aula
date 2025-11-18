@@ -7,7 +7,6 @@ export default function Home() {
     <div className="flex min-h-screen flex-col ">
       <MissionVision />
       <EventCountdown targetDate={futureDate} />
-      <div>asdasd</div>
     </div>
   );
 }
