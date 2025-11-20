@@ -3,7 +3,7 @@
 import { useState, useEffect, Fragment } from "react";
 import { motion, AnimatePresence } from "motion/react";
 
-const useCountdown = (targetDate: number) => {
+export const useCountdown = (targetDate: number) => {
   const [timeLeft, setTimeLeft] = useState(targetDate - new Date().getTime());
 
   useEffect(() => {
@@ -52,7 +52,7 @@ const AnimatedDigit: React.FC<AnimatedDigitProps> = ({ value, label }) => (
     variants={itemVariants}
     className="
       flex flex-col items-center justify-center
-      h-36 w-24 md:h-40 md:w-32 rounded-xl p-3 shadow-lg 
+      h-14 w-14 rounded-xl  shadow-lg 
       bg-white/10 backdrop-blur-md border border-white/20
       cursor-pointer transition-all duration-300
     "
@@ -69,16 +69,14 @@ const AnimatedDigit: React.FC<AnimatedDigitProps> = ({ value, label }) => (
           animate={{ y: "0%", opacity: 1 }}
           exit={{ y: "-100%", opacity: 0.5 }}
           transition={{ duration: 0.3, ease: "easeInOut" }}
-          className="absolute text-5xl md:text-7xl font-extrabold text-white leading-none"
+          className="absolute text-xl font-extrabold text-white leading-none"
         >
           {String(value).padStart(2, "0")}
         </motion.span>
       </AnimatePresence>
     </div>
 
-    <div className="w-full text-sm md:text-base text-center text-white/80 font-medium mt-1">
-      {label}
-    </div>
+    <div className=" text-center text-white/80 font-medium mt-1">{label}</div>
   </motion.div>
 );
 
@@ -95,7 +93,7 @@ const Separator: React.FC = () => (
       ease: "easeInOut",
       delay: 0.2,
     }}
-    className="text-4xl md:text-6xl font-extrabold text-white/70 mx-2 md:mx-4 self-center mb-6 md:mb-8"
+    className="text-sm font-extrabold text-white/70  self-center"
   >
     :
   </motion.div>
@@ -133,43 +131,28 @@ export const EventCountdown: React.FC<EventCountdownProps> = ({
 
   if (timeLeft.isPast) {
     return (
-      <section className="flex flex-col items-center justify-center py-20 bg-[#18120F] min-h-screen">
-        <h2 className="text-4xl font-black mb-8 text-red-400">
-          Event Concluded!
-        </h2>
+      <section className="flex flex-col items-center justify-center  bg-[#18120F] min-h-screen">
+        <h2 className="text-lg font-black  text-red-400">Event Concluded!</h2>
       </section>
     );
   }
 
   return (
-    <section className="flex flex-col items-center justify-center py-20 w-full bg-[#18120F] min-h-screen">
-      <motion.h2
-        initial={{ y: -20, opacity: 0 }}
-        whileInView={{ y: 0, opacity: 1 }}
-        viewport={{ once: false, amount: 0.5 }}
-        transition={{ delay: 0.2, duration: 0.5 }}
-        className="text-4xl font-extrabold mb-12 text-white/90 tracking-wider"
-      >
-        Event Starts In
-      </motion.h2>
-
-      <motion.div
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: false, amount: 0.5 }}
-        variants={containerVariants}
-        className="
-          flex flex-wrap justify-start items-center gap-3 p-4 md:p-6 
-          bg-black/20 rounded-2xl shadow-inner
-        "
-      >
-        {timerBlocks.map((block, index) => (
-          <Fragment key={block.label}>
-            <AnimatedDigit value={block.value} label={block.label} />
-            {index < timerBlocks.length - 1 && <Separator />}
-          </Fragment>
-        ))}
-      </motion.div>
-    </section>
+    <motion.div
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: false, amount: 0.5 }}
+      variants={containerVariants}
+      className="
+          flex flex-row justify-start items-center 
+           rounded-2xl shadow-inner        "
+    >
+      {timerBlocks.map((block, index) => (
+        <Fragment key={block.label}>
+          <AnimatedDigit value={block.value} label={block.label} />
+          {index < timerBlocks.length - 1 && <Separator />}
+        </Fragment>
+      ))}
+    </motion.div>
   );
 };
