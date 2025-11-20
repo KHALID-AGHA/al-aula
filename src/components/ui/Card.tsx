@@ -1,6 +1,7 @@
 "use client";
-import { missionVisionCards } from "@/src/lib/data";
+import { aboutCards } from "@/src/lib/data";
 import { motion } from "motion/react";
+import Image from "next/image";
 
 const Card = () => {
   const containerVariants = {
@@ -14,26 +15,22 @@ const Card = () => {
     },
   };
 
-  const cardHoverVariants = {
-    whileHover: {
-      scale: 1.05, 
-      rotateY: 5, 
-      boxShadow: "0 10px 15px rgba(0, 0, 0, 0.2)", 
-    },
-     whileTap: {
-      scale: 0.98,
-    },
-  };
   const cardEntranceVariants = {
-    hidden: { y: 50, opacity: 0 }, 
+    hidden: { opacity: 0, scale: 0.95, transition: { staggerChildren: 0.1 } },
     visible: {
-      y: 0, 
-      opacity: 1, 
+      opacity: 1,
+      scale: 1,
       transition: {
-        stiffness: 100,
-        damping: 20,
+        delay: 0.1,
+        duration: 0.4,
+        staggerChildren: 0.15,
       },
     },
+  };
+
+  const childStaggerVariants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: { y: 0, opacity: 1 },
   };
 
   return (
@@ -42,25 +39,42 @@ const Card = () => {
       variants={containerVariants}
       initial="hidden"
       whileInView="visible"
-      viewport={{ once: false, amount: 0.5 }} 
+      viewport={{ once: false, amount: 0.5 }}
     >
-      {missionVisionCards.map((card, index) => (
+      {aboutCards.map((card, index) => (
         <motion.div
           key={index}
           variants={cardEntranceVariants}
-          transition={{ duration: 0.2 }}
-          className="bg-white/30 rounded-lg shadow-xl p-6 py-12 lg:w-1/3 w-full 
-        flex gap-y-14 flex-col items-start justify-start
-        transition-all duration-200"
+          initial="hidden"
+          animate="visible"
+          viewport={{ once: false, amount: 0.5 }}
+          className="bg-white/30 rounded-3xl shadow-xl p-6 py-16 lg:w-1/3 w-full 
+    flex gap-y-14 flex-col items-center lg:items-start
+    transition-all duration-200"
         >
           <motion.div
-            whileHover={cardHoverVariants.whileHover}
-            whileTap={cardHoverVariants.whileTap}
-            className="cursor-pointer w-8 h-8 rounded-full bg-[#3f2416] text-white items-center text-center"
+            variants={childStaggerVariants}
+            className="cursor-pointer w-8 h-8 rounded-full text-white  "
           >
-            &#8599;
+            <Image
+              src={card.icon}
+              alt="icon"
+              width={32}
+              height={32}
+              className="m-auto mt-2  "
+            />
           </motion.div>
-          <div>{card.content}</div>
+          <div className="text-white flex flex-col  justify-center gap-y-4">
+            <motion.h2
+              variants={childStaggerVariants}
+              className="lg:text-start text-center"
+            >
+              header
+            </motion.h2>
+            <motion.h3 variants={childStaggerVariants}>
+              {card.content}
+            </motion.h3>
+          </div>
         </motion.div>
       ))}
     </motion.div>
